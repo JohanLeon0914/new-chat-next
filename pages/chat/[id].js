@@ -43,7 +43,7 @@ export default function Chat() {
     <Flex
       h="100vh"
     >
-      <Head><title>Chat App</title></Head>
+      <Head><title>Boomerland chat</title></Head>
 
       <Sidebar />
 
