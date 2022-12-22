@@ -10,6 +10,9 @@ export default function Bottombar({id, user, isGroup}) {
     let date = new Date();
     let hour = date.getHours();
     let minutes = date.getMinutes();
+    if(minutes <= 9) {
+      minutes = `0${minutes}`;
+    }
     
     let dayOrNight = hour <= 12? "am": "pm"
     return (`${hour}:${minutes} ${dayOrNight}`)
