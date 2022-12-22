@@ -34,7 +34,9 @@ export default function Group() {
           <Flex alignSelf={senderFunction(msg.sender) ? "flex-start" : "flex-end"} bg={senderFunction(msg.sender) ? "blue.100" : "green.100"} w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
           <Text>{msg.text}</Text>
         </Flex>
+        <Flex  alignSelf={senderFunction(msg.sender) ? "flex-start" : "flex-end"}>
           <p>{msg.sendTime}</p>
+          </Flex>
         </Flex>
       )
     })

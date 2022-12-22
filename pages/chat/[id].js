@@ -28,7 +28,9 @@ export default function Chat() {
         <Flex key={Math.random()} alignSelf={sender ? "flex-start" : "flex-end"} bg={sender ? "blue.100" : "green.100"} w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
           <Text>{msg.text}</Text>
         </Flex>
+        <Flex alignSelf={sender ? "flex-start" : "flex-end"}>
         <p>{msg.sendTime}</p>
+        </Flex>
         </Flex>
       )
     })
