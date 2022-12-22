@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 export default function Sidebar() {
   
   const [user] = useAuthState(auth);
+  console.log(user)
   const [snapshot] = useCollection(collection(db, "chats"));
   const chats = snapshot?.docs.map(doc => ({id: doc.id, ...doc.data()}));
 
@@ -84,7 +85,7 @@ export default function Sidebar() {
       >
         <Flex align="center">
           <Avatar src={user.photoURL} marginEnd={3} />
-          <Text> {user.displayName} </Text>
+          <Text> {user.displayName ? user.displayName: user.email} </Text>
         </Flex>
         <IconButton size="sm" isRound icon={<ArrowLeftIcon />} onClick={() => signOut(auth)} />
       </Flex>
