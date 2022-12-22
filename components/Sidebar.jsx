@@ -1,12 +1,11 @@
 import { ArrowLeftIcon } from "@chakra-ui/icons";
-import { Avatar, Button, Flex, IconButton, Text } from "@chakra-ui/react";
+import { Avatar, Button, Center, Flex, IconButton, Text } from "@chakra-ui/react";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../firebaseconfig";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection, addDoc } from "firebase/firestore";
 import getOtherEmail from "../util/getOtherEmail";
-import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/router";
 
 
@@ -14,12 +13,20 @@ import { useRouter } from "next/router";
 export default function Sidebar() {
   
   const [user] = useAuthState(auth);
-  const [snapshot, loading, error] = useCollection(collection(db, "chats"));
+  const [snapshot] = useCollection(collection(db, "chats"));
   const chats = snapshot?.docs.map(doc => ({id: doc.id, ...doc.data()}));
+
+  const [snapshot2] = useCollection(collection(db, "groups"));
+  const groups = snapshot2?.docs.map(doc => ({id: doc.id, ...doc.data()}));
+
   const router = useRouter()
 
   const redirect = (id) => {
     router.push(`/chat/${id}`)
+  }
+
+  const redirectGroup = (id) => {
+    router.push(`/group/${id}`)
   }
 
   const chatExists = email => chats?.find(chat => (chat.users.includes(user.email) && chat.users.includes(email)))
@@ -38,6 +45,19 @@ export default function Sidebar() {
          <Flex key={chat.id} p={3} align="center" _hover={{ bg: "gray.100", cursor: "pointer" }} onClick={() => redirect(chat.id)} >
         <Avatar src="" marginEnd={3} />
         <Text> {getOtherEmail(chat.users, user)} </Text>
+      </Flex>
+      )
+    );
+  };
+
+  const groupList = () => {
+    return (
+      groups?.filter(group => group.users.includes(user.email))
+      .map(
+        group => 
+         <Flex key={group.id} p={3} align="center" _hover={{ bg: "gray.100", cursor: "pointer" }} onClick={() => redirectGroup(group.id)} >
+        <Avatar src="" marginEnd={3} />
+        <Text> {group.name} </Text>
       </Flex>
       )
     );
@@ -75,8 +95,10 @@ export default function Sidebar() {
 
       <Flex className="chats-container" overflowX="scroll" direction='column' sx={{scrollbarWidth: "none"}} flex={1}>
         {chatList()}
+        <hr /> 
+        <Center> Grupos </Center>
+        {groupList()}
       </Flex>
-      
 
     </Flex>
   );

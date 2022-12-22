@@ -3,16 +3,24 @@ import { FormControl, Input, Button } from "@chakra-ui/react";
 import { serverTimestamp, addDoc, collection } from "firebase/firestore";
 import { db } from "../firebaseconfig";
 
-export default function Bottombar({id, user}) {
+export default function Bottombar({id, user, isGroup}) {
   const [input, setInput] = useState("");
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    await addDoc(collection(db, `chats/${id}/messages`), {
-      text: input,
-      sender: user.email,
-      timestamp: serverTimestamp()
-    })
+    if(!isGroup) {
+      await addDoc(collection(db, `chats/${id}/messages`), {
+        text: input,
+        sender: user.email,
+        timestamp: serverTimestamp()
+      })
+    } else {
+      await addDoc(collection(db, `groups/${id}/messages`), {
+        text: input,
+        sender: user.email,
+        timestamp: serverTimestamp()
+      })
+    }
     setInput("");
   }
 
