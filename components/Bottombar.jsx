@@ -6,19 +6,30 @@ import { db } from "../firebaseconfig";
 export default function Bottombar({id, user, isGroup}) {
   const [input, setInput] = useState("");
 
+  const getTime = () => {
+    let date = new Date();
+    let hour = date.getHours();
+    let minutes = date.getMinutes();
+    
+    let dayOrNight = hour <= 12? "am": "pm"
+    return (`${hour}:${minutes} ${dayOrNight}`)
+  }
+
   const sendMessage = async (e) => {
     e.preventDefault();
     if(!isGroup) {
       await addDoc(collection(db, `chats/${id}/messages`), {
         text: input,
         sender: user.email,
-        timestamp: serverTimestamp()
+        timestamp: serverTimestamp(),
+        sendTime: getTime()
       })
     } else {
       await addDoc(collection(db, `groups/${id}/messages`), {
         text: input,
         sender: user.email,
-        timestamp: serverTimestamp()
+        timestamp: serverTimestamp(),
+        sendTime: getTime()
       })
     }
     setInput("");

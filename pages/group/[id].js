@@ -25,14 +25,16 @@ export default function Group() {
     if(sender === user.email) return true;
   }
 
+
   const getMessages = () =>
     messages?.map(msg => {
       return (
-        <Flex key={Math.random()} alignSelf={senderFunction(msg.sender) ? "flex-start" : "flex-end"} direction="column">
+        <Flex key={Math.random()} alignSelf={senderFunction(msg.sender) ? "flex-start" : "flex-end"} direction="column" m={4}>
           <p className="name_sender">{msg.sender}</p>
           <Flex alignSelf={senderFunction(msg.sender) ? "flex-start" : "flex-end"} bg={senderFunction(msg.sender) ? "blue.100" : "green.100"} w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
           <Text>{msg.text}</Text>
         </Flex>
+          <p>{msg.sendTime}</p>
         </Flex>
       )
     })
