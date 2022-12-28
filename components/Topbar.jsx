@@ -1,4 +1,4 @@
-import { ArrowLeftIcon } from "@chakra-ui/icons"
+import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons"
 import { Flex, Heading, Avatar, IconButton } from "@chakra-ui/react"
 import { useState } from "react"
 import Sidebar from "./Sidebar"
@@ -30,7 +30,7 @@ export default function Topbar({email}) {
       align="center"
       p={5}
     >
-      <IconButton size="sm" isRound icon={<ArrowLeftIcon />} onClick={() => desplegarSidebar()} />
+      <IconButton size="sm" isRound icon={<ArrowRightIcon />} onClick={() => desplegarSidebar()} />
       <Avatar src="" marginEnd={3} />
       <Heading size="lg">{email}</Heading>
     </Flex>

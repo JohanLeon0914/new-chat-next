@@ -92,6 +92,7 @@ export default function Sidebar() {
       borderEnd="1px solid"
       borderColor="gray.200"
       direction="column"
+      bg="gray.100"
       // hidden={esconderSidebar}
     >
       <Flex
