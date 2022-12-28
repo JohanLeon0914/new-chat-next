@@ -56,7 +56,7 @@ export default function Group() {
     >
       <Head><title>Boomerland chat</title></Head>
 
-      <Sidebar />
+      {/* <Sidebar /> */}
 
       <Flex flex={1} direction="column">
         <Topbar email='boomerland' />

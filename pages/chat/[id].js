@@ -8,8 +8,9 @@ import { collection, doc, orderBy, query } from "firebase/firestore"
 import { db, auth } from "../../firebaseconfig"
 import Topbar from "../../components/Topbar"
 import Bottombar from "../../components/Bottombar"
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import getOtherEmail from "../../util/getOtherEmail";
+import { useSound } from 'use-sound'
 
 export default function Chat() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function Chat() {
   const q = query(collection(db, `chats/${id}/messages`), orderBy("timestamp"));
   const [messages] = useCollectionData(q);
   const bottomOfChat = useRef();
+  const [messageSound] = useSound('/sounds/message.mp3') 
 
   const getMessages = () =>
     messages?.map(msg => {
@@ -41,6 +43,12 @@ export default function Chat() {
       behavior: "smooth",
       block: 'start',
     }), 100)
+    if(messages != null){
+      if(messages[messages.length - 1]?.sender !== user.email) {
+        messageSound()
+      } 
+    }
+    
   }
   , [messages])
 
@@ -50,7 +58,7 @@ export default function Chat() {
     >
       <Head><title>Boomerland chat</title></Head>
 
-      <Sidebar />
+      {/* <Sidebar /> */}
 
       <Flex flex={1} direction="column">
         <Topbar email={getOtherEmail(chat?.users, user)} />
@@ -59,7 +67,6 @@ export default function Chat() {
           {getMessages()}
           <div ref={bottomOfChat}></div>
         </Flex>
-
         <Bottombar id={id} user={user} />
       </Flex>
 

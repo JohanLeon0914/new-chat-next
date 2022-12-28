@@ -20,7 +20,9 @@ function MyApp({ Component, pageProps }) {
   if(!user) {
     return (
       <ChakraProvider>
-        <Login />
+        <Center>
+          <Login />
+        </Center>
       </ChakraProvider>
     )
   }

@@ -46,7 +46,6 @@ export default function Login() {
             rounded="lg"
             boxShadow="md"
           >
-            <Center>
             <FormControl p={3} onSubmit={handleSubmit} as="form">
               <Input
                 bg='gray.200'
@@ -54,22 +53,22 @@ export default function Login() {
                 placeholder="Email"
                 onChange={(e) => setInput(e.target.value)}
                 type='email'
-                m={3}
+                marginBottom={3}
               />
               <Input
                 bg='gray.200'
                 textColor='black'
                 placeholder="Password"
                 type="password"
-                m={3}
                 onChange={(e) => setPass(e.target.value)}
+                marginBottom={3}
               />
+              <Center>
               <Button type="submit" onClick={(e) => handleSubmit(e)}>
                 Submit
               </Button>
+              </Center>
             </FormControl>
-            </Center>
-            <ChatIcon w="100px" h="100px" color="white" />
           </Box>
           <Button
             boxShadow="md"
