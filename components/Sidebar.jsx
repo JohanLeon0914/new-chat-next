@@ -35,10 +35,15 @@ export default function Sidebar() {
     router.push(`/group/${id}`);
   };
 
-  const chatExists = (email) =>
-    chats?.find(
-      (chat) => chat.users.includes(user.email) && chat.users.includes(email)
+  const chatExists = (email) => {
+    if (!chats || chats.length === 0) {
+      return false; // O cualquier otro valor apropiado si no hay chats
+    }
+  
+    return chats.find(
+      (chat) => chat.users && chat.users.includes(user.email) && chat.users.includes(email)
     );
+  };
 
   const newChat = async () => {
     const input = prompt("Digita el email del chat");
@@ -47,8 +52,12 @@ export default function Sidebar() {
   };
 
   const chatList = () => {
+    if (!chats || chats.length === 0) {
+      return null; // O cualquier otro valor apropiado si no hay chats
+    }
+  
     return chats
-      ?.filter((chat) => chat.users.includes(user.email))
+      .filter((chat) => chat.users && chat.users.includes(user.email))
       .map((chat) => (
         <Flex
           key={chat.id}
